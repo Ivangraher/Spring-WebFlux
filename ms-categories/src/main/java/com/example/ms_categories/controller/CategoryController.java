@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -28,5 +29,11 @@ public class CategoryController {
     public Flux<User> getUsersByCategoryId(@PathVariable Integer categoryId) {
         return service.getUsersByCategoryId(categoryId);
     }
+
+    @GetMapping("/{categoryId}")
+    public Mono<Category> getCategoryById(@PathVariable Integer categoryId) {
+        return service.getCategoryById(categoryId);
+    }
+
 }
 

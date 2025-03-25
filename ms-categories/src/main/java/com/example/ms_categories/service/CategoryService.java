@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -34,4 +35,13 @@ public class CategoryService {
                 .retrieve()
                 .bodyToFlux(User.class);
     }
+
+    public Mono<Category> getCategoryById(Integer categoryId) {
+        return Mono.justOrEmpty(repository.findById(categoryId))
+                .map(category -> new Category(category.getId(), category.getName()))
+                .switchIfEmpty(Mono.error(new RuntimeException("Categoría no encontrada")));
+    }
+
+
+
 }
